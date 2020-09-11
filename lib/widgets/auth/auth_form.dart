@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
+  final Function(String mail, String pass, String username, bool isSignin)
+      submitAuthForm;
+
+  const AuthForm(this.submitAuthForm);
+
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -31,7 +36,7 @@ class _AuthFormState extends State<AuthForm> {
     _passFocusNode.dispose();
   }
 
-  Future<void> _authenticate() async {
+  Future<void> _validateSaveForm() async {
     if (!_form.currentState.validate()) {
       return;
     }
@@ -40,9 +45,8 @@ class _AuthFormState extends State<AuthForm> {
     setState(() {
       _isLoading = true;
     });
-    print('dart mess: before save $_mail');
-    print('dart mess: $_username');
     _form.currentState.save();
+    widget.submitAuthForm(_mail, _pass, _username, _isSiginin);
     print('dart mess: after $_mail');
     print('dart mess: $_username');
     print('dart mess: $_pass');
@@ -84,8 +88,11 @@ class _AuthFormState extends State<AuthForm> {
                         },
                         onFieldSubmitted: (value) {
                           //step 2. these fields for go to nest field in form
-                          FocusScope.of(context)
-                              .requestFocus(_usernameFocusNode);
+                          !_isSiginin
+                              ? FocusScope.of(context)
+                                  .requestFocus(_usernameFocusNode)
+                              : FocusScope.of(context)
+                                  .requestFocus(_passFocusNode);
                         },
                         onSaved: (newValue) => _mail = newValue,
                       ),
@@ -130,7 +137,7 @@ class _AuthFormState extends State<AuthForm> {
                       _isLoading
                           ? CircularProgressIndicator()
                           : RaisedButton(
-                              onPressed: _authenticate,
+                              onPressed: _validateSaveForm,
                               child: Text(_isSiginin ? 'Login' : 'Sign up'),
                             ),
                       FlatButton(
