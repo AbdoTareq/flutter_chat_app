@@ -16,33 +16,36 @@ class ChatScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: FutureBuilder(
-      future: Firebase.initializeApp(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return    StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('chats/GSqttGEYaWLoDMm00AQL/messages')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                final List<QueryDocumentSnapshot> docs = snapshot.data.documents;
-                return ListView.builder(
-                  itemCount: docs.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: Text(docs[index].data()['text'].toString()),
+        body: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('chats/GSqttGEYaWLoDMm00AQL/messages')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
                     );
-                  },
-                );
-              })
-      ;
+                  }
+                  final List<QueryDocumentSnapshot> docs =
+                      snapshot.data.documents;
+                  return ListView.builder(
+                    itemCount: docs.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        child: Text(docs[index].data()['text'].toString()),
+                      );
+                    },
+                  );
           },
         ),
-        floatingActionButton: FloatingActionButton(onPressed: () {}));
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              FirebaseFirestore.instance
+                  .collection('chats/GSqttGEYaWLoDMm00AQL/messages').add({
+                    'text': 'added from flutter'
+                  });
+            }));
   }
 
   void firbaseCall() async {
