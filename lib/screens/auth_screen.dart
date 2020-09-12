@@ -39,7 +39,7 @@ class _AuthScreenState extends State<AuthScreen> {
             .doc(userCredential.user.uid)
             .set({
           'mail': mail,
-          'uasername': username,
+          'username': username,
         });
       }
     } on PlatformException catch (e) {

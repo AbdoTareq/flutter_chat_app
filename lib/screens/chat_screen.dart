@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/widgets/chat/messages.dart';
 import 'package:flutter_chat_app/widgets/chat/new_message.dart';
@@ -47,7 +46,4 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
-  void firbaseCall() async {
-    await Firebase.initializeApp();
-  }
 }
