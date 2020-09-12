@@ -4,7 +4,8 @@ class AuthForm extends StatefulWidget {
   final Function(String mail, String pass, String username, bool isSignin,
       BuildContext ctx) submitAuthForm;
 
-  const AuthForm(this.submitAuthForm);
+  final bool _isLoading;
+  const AuthForm(this.submitAuthForm, this._isLoading);
 
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -17,8 +18,7 @@ class _AuthFormState extends State<AuthForm> {
   final _usernameFocusNode = FocusNode();
   final _passFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
-  bool _isLoading = false;
-  bool _isSiginin = true;
+  bool _isSiginin = false;
   String _mail = '';
   String _username = '';
   String _pass = '';
@@ -42,17 +42,13 @@ class _AuthFormState extends State<AuthForm> {
     }
     // this to close keyboard if fileds are valid
     FocusScope.of(context).unfocus();
-    setState(() {
-      _isLoading = true;
-    });
+
     _form.currentState.save();
-    widget.submitAuthForm(_mail.trim(), _pass.trim(), _username.trim(), _isSiginin, context);
+    widget.submitAuthForm(
+        _mail.trim(), _pass.trim(), _username.trim(), _isSiginin, context);
     print('dart mess: after $_mail');
     print('dart mess: $_username');
     print('dart mess: $_pass');
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
@@ -133,7 +129,7 @@ class _AuthFormState extends State<AuthForm> {
                       SizedBox(
                         height: 10,
                       ),
-                      _isLoading
+                      widget._isLoading
                           ? CircularProgressIndicator()
                           : RaisedButton(
                               onPressed: _validateSaveForm,
