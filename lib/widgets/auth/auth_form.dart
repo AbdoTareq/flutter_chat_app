@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  final Function(String mail, String pass, String username, bool isSignin)
-      submitAuthForm;
+  final Function(String mail, String pass, String username, bool isSignin,
+      BuildContext ctx) submitAuthForm;
 
   const AuthForm(this.submitAuthForm);
 
@@ -18,7 +18,7 @@ class _AuthFormState extends State<AuthForm> {
   final _passFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
   bool _isLoading = false;
-  bool _isSiginin = false;
+  bool _isSiginin = true;
   String _mail = '';
   String _username = '';
   String _pass = '';
@@ -36,7 +36,7 @@ class _AuthFormState extends State<AuthForm> {
     _passFocusNode.dispose();
   }
 
-  Future<void> _validateSaveForm() async {
+  _validateSaveForm() {
     if (!_form.currentState.validate()) {
       return;
     }
@@ -46,11 +46,10 @@ class _AuthFormState extends State<AuthForm> {
       _isLoading = true;
     });
     _form.currentState.save();
-    widget.submitAuthForm(_mail, _pass, _username, _isSiginin);
+    widget.submitAuthForm(_mail.trim(), _pass.trim(), _username.trim(), _isSiginin, context);
     print('dart mess: after $_mail');
     print('dart mess: $_username');
     print('dart mess: $_pass');
-    await Future.delayed(Duration(seconds: 2));
     setState(() {
       _isLoading = false;
     });
@@ -123,7 +122,7 @@ class _AuthFormState extends State<AuthForm> {
                         decoration: InputDecoration(labelText: 'Password'),
                         obscureText: true,
                         validator: (value) {
-                          if (value.isEmpty || value.length <= 8) {
+                          if (value.isEmpty || value.length <= 7) {
                             return 'Please enter valid pass longer than 8 chars';
                           }
                           // null here mean it's a valid input
