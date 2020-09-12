@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/widgets/chat/message_buuble.dart';
 
 class Messages extends StatelessWidget {
   @override
@@ -16,18 +17,15 @@ class Messages extends StatelessWidget {
           );
         }
         final List<QueryDocumentSnapshot> docs = chatSnapshot.data.documents;
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            // revese list bottom top
-            reverse: true,
-            itemCount: docs.length,
-            itemBuilder: (context, index) {
-              return Container(
-                child: Text(docs[index].data()['text'].toString()),
-              );
-            },
-          ),
+        return ListView.builder(
+          // revese list bottom top
+          reverse: true,
+          itemCount: docs.length,
+          itemBuilder: (context, index) {
+            return Container(
+              child: MessageBubble(docs[index].data()['text'].toString()),
+            );
+          },
         );
       },
     );
