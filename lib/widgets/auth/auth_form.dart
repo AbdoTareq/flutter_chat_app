@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/widgets/auth/profile_image.dart';
 
 class AuthForm extends StatefulWidget {
   final Function(String mail, String pass, String username, bool isSignin,
@@ -57,7 +58,7 @@ class _AuthFormState extends State<AuthForm> {
       child: AnimatedContainer(
         duration: Duration(milliseconds: 300),
         curve: Curves.easeIn,
-        height: !_isSiginin ? 330 : 270,
+        height: !_isSiginin ? 480 : 280,
         child: Card(
           margin: EdgeInsets.all(12),
           child: Padding(
@@ -69,6 +70,8 @@ class _AuthFormState extends State<AuthForm> {
                     // this to make column take min height like wrap content
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      if (!_isSiginin) 
+                      ProfileImage(),
                       TextFormField(
                         //key is to diffirentiate every TextFormField to stop a bug like if enter username then switch to login pass will have username value
                         key: ValueKey('mail'),
@@ -94,7 +97,6 @@ class _AuthFormState extends State<AuthForm> {
                       if (!_isSiginin)
                         TextFormField(
                           key: ValueKey('username'),
-
                           // step 3. these fields for go to nest field in form
                           focusNode: _usernameFocusNode,
                           decoration: InputDecoration(labelText: 'Username'),
