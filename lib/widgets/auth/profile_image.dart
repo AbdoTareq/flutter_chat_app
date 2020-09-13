@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileImage extends StatefulWidget {
+  final Function(File image) imagePickFn;
+
+  const ProfileImage(this.imagePickFn);
+
   @override
   _ProfileImageState createState() => _ProfileImageState();
 }
@@ -37,9 +41,11 @@ class _ProfileImageState extends State<ProfileImage> {
             ));
     final pickedFile =
         await ImagePicker().getImage(source: choice, maxWidth: 600);
+    final File imageFile = File(pickedFile.path);
     setState(() {
-      pickedImage = File(pickedFile.path);
+      pickedImage = imageFile;
     });
+    widget.imagePickFn(imageFile);
   }
 
   @override

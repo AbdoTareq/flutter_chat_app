@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/widgets/auth/profile_image.dart';
 
@@ -19,14 +21,14 @@ class _AuthFormState extends State<AuthForm> {
   final _usernameFocusNode = FocusNode();
   final _passFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
-  bool _isSiginin = false;
+  bool _isSiginin = true;
   String _mail = '';
   String _username = '';
   String _pass = '';
+  File _imageFile;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  _pickedImageFn(File imageFile) {
+    _imageFile = imageFile;
   }
 
   @override
@@ -38,12 +40,18 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   _validateSaveForm() {
+    // this to close keyboard if fileds are valid
+    FocusScope.of(context).unfocus();
+    if (_imageFile == null && !_isSiginin) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Please pick image'),
+      ));
+      return;
+    }
     if (!_form.currentState.validate()) {
       return;
     }
-    // this to close keyboard if fileds are valid
-    FocusScope.of(context).unfocus();
-
+    
     _form.currentState.save();
     widget.submitAuthForm(
         _mail.trim(), _pass.trim(), _username.trim(), _isSiginin, context);
@@ -70,8 +78,7 @@ class _AuthFormState extends State<AuthForm> {
                     // this to make column take min height like wrap content
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (!_isSiginin) 
-                      ProfileImage(),
+                      if (!_isSiginin) ProfileImage(_pickedImageFn),
                       TextFormField(
                         //key is to diffirentiate every TextFormField to stop a bug like if enter username then switch to login pass will have username value
                         key: ValueKey('mail'),
