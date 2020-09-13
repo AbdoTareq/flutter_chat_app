@@ -26,6 +26,7 @@ class _NewMessageState extends State<NewMessage> {
       'createdAt': Timeline.now,
       'userId': _currentUser.uid,
       'username': _userData.data()['username'],
+      'userImage': _userData.data()['user_url'],
     });
     _textController.clear();
   }

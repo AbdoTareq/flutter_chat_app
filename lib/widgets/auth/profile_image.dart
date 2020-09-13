@@ -39,8 +39,8 @@ class _ProfileImageState extends State<ProfileImage> {
                 )
               ],
             ));
-    final pickedFile =
-        await ImagePicker().getImage(source: choice, maxWidth: 600);
+    final pickedFile = await ImagePicker()
+        .getImage(source: choice, maxWidth: 150, imageQuality: 50);
     final File imageFile = File(pickedFile.path);
     setState(() {
       pickedImage = imageFile;

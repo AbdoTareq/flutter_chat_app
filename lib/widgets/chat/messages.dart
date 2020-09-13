@@ -23,13 +23,17 @@ class Messages extends StatelessWidget {
           reverse: true,
           itemCount: docs.length,
           itemBuilder: (context, index) {
+            print('dart mess: ${docs[index].data()}');
+
             return MessageBubble(
-              docs[index].data()['text'].toString(),
-              docs[index].data()['username'].toString(),
-              docs[index].data()['userId'] == FirebaseAuth.instance.currentUser.uid,
-              // this key to optimize updating messages 
-              key: ValueKey(docs[index].id)
-            );
+                docs[index].data()['text'].toString(),
+                docs[index].data()['username'].toString(),
+                docs[index].data()['userImage'].toString(),
+                // this field represents isMe
+                docs[index].data()['userId'] ==
+                    FirebaseAuth.instance.currentUser.uid,
+                // this key to optimize updating messages
+                key: ValueKey(docs[index].id));
           },
         );
       },
