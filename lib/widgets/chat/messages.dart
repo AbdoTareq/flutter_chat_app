@@ -1,9 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/widgets/chat/message_bubble.dart';
 
-class Messages extends StatelessWidget {
+class Messages extends StatefulWidget {
+  @override
+  _MessagesState createState() => _MessagesState();
+}
+
+class _MessagesState extends State<Messages> {
+  @override
+  void initState() {
+    super.initState();
+    // these 3 lines for ios permission configure for firebase messaging
+    final fbm = FirebaseMessaging();
+    fbm.requestNotificationPermissions();
+    fbm.configure();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
