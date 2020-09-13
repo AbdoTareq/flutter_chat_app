@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/widgets/auth/profile_image.dart';
 
 class AuthForm extends StatefulWidget {
-  final Function(String mail, String pass, String username, bool isSignin,
-      BuildContext ctx) submitAuthForm;
+  final Function(String mail, String pass, String username, File image,
+      bool isSignin, BuildContext ctx) submitAuthForm;
 
   final bool _isLoading;
   const AuthForm(this.submitAuthForm, this._isLoading);
@@ -51,13 +51,11 @@ class _AuthFormState extends State<AuthForm> {
     if (!_form.currentState.validate()) {
       return;
     }
-    
+
     _form.currentState.save();
-    widget.submitAuthForm(
-        _mail.trim(), _pass.trim(), _username.trim(), _isSiginin, context);
-    print('dart mess: after $_mail');
-    print('dart mess: $_username');
-    print('dart mess: $_pass');
+    widget.submitAuthForm(_mail.trim(), _pass.trim(), _username.trim(),
+        _imageFile, _isSiginin, context);
+    print('dart mess:  $_imageFile');
   }
 
   @override
