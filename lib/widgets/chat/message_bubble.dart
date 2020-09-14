@@ -74,7 +74,7 @@ class MessageBubble extends StatelessWidget {
         // this widget to fix image postion on messgae bubble
         Positioned(
             right: isMe ? 7 : null,
-            left: isMe ? null : 0,
+            left: isMe ? null : 7,
             bottom: -10,
             child: CircleAvatar(
               backgroundImage: NetworkImage(userImage),

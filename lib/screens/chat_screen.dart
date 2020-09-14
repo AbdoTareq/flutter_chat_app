@@ -12,6 +12,8 @@ class ChatScreen extends StatelessWidget {
         title: Text('Title'),
         actions: [
           DropdownButton(
+            // this to hide gray box that is around app bar but i can't see it
+            underline: Container(),
               icon: Icon(
                 Icons.more_vert,
                 color: Theme.of(context).primaryIconTheme.color,

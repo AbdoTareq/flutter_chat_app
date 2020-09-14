@@ -12,7 +12,7 @@ class NewMessage extends StatefulWidget {
 class _NewMessageState extends State<NewMessage> {
   TextEditingController _textController = TextEditingController();
   String _enteredMessage = '';
-  
+
   _sendMessage() async {
     final _currentUser = FirebaseAuth.instance.currentUser;
     final _userData = await FirebaseFirestore.instance
@@ -41,6 +41,9 @@ class _NewMessageState extends State<NewMessage> {
           Expanded(
             child: TextField(
               controller: _textController,
+              autocorrect: true,
+              enableSuggestions: true,
+              textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(labelText: 'Send message ...'),
               onChanged: (value) {
                 setState(() {

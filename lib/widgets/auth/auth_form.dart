@@ -80,6 +80,9 @@ class _AuthFormState extends State<AuthForm> {
                       TextFormField(
                         //key is to diffirentiate every TextFormField to stop a bug like if enter username then switch to login pass will have username value
                         key: ValueKey('mail'),
+                        autocorrect: false,
+                        enableSuggestions: true,
+                        textCapitalization: TextCapitalization.none,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(labelText: 'Mail'),
                         validator: (value) {
@@ -104,6 +107,9 @@ class _AuthFormState extends State<AuthForm> {
                           key: ValueKey('username'),
                           // step 3. these fields for go to nest field in form
                           focusNode: _usernameFocusNode,
+                          autocorrect: true,
+                          enableSuggestions: true,
+                          textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(labelText: 'Username'),
                           validator: (value) {
                             if (value.isEmpty) {
