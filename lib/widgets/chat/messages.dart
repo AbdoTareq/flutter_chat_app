@@ -40,6 +40,7 @@ class _MessagesState extends State<Messages> {
         return;
       },
     );
+    fbm.subscribeToTopic('chat');
   }
 
   @override
