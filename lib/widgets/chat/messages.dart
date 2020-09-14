@@ -15,8 +15,8 @@ class _MessagesState extends State<Messages> {
     super.initState();
     // this line for ios permission configure for firebase messaging
     final fbm = FirebaseMessaging();
-    //
     fbm.requestNotificationPermissions();
+    //
     fbm.configure(
       onMessage: (msg) {
         print('dart mess: $msg');
