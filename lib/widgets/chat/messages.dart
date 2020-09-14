@@ -13,10 +13,33 @@ class _MessagesState extends State<Messages> {
   @override
   void initState() {
     super.initState();
-    // these 3 lines for ios permission configure for firebase messaging
+    // this line for ios permission configure for firebase messaging
     final fbm = FirebaseMessaging();
+    //
     fbm.requestNotificationPermissions();
-    fbm.configure();
+    fbm.configure(
+      onMessage: (msg) {
+        print('dart mess: $msg');
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(msg.toString()),
+        ));
+        return;
+      },
+      onLaunch: (msg) {
+        print('dart mess: $msg');
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(msg.toString()),
+        ));
+        return;
+      },
+      onResume: (msg) {
+        print('dart mess: $msg');
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(msg.toString()),
+        ));
+        return;
+      },
+    );
   }
 
   @override
